@@ -17,18 +17,18 @@ services:
         source: ./src/main/resources/db
         target: /docker-entrypoint-initdb.d
     networks:
-      - backend
+      - sports-backend
 
   tennis-service:
     build: ./
     ports:
       - "49160:8080"
     networks:
-      - backend
+      - sports-backend
 
 volumes:
   tennis-volume:
 
 networks:
-  backend:
+  sports-backend:
     driver: bridge
