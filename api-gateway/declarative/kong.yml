@@ -2,11 +2,10 @@ _format_version: "3.0"
 _transform: true
 
 services:
-  - name: tennis_service
+  - name: tennis_api
     url: http://host.docker.internal:49160
-    port: 80
     protocol: http
     routes:
-      - name: tennis_service_route
+      - name: tennis_api_route
         paths:
-          - /tennis
+          - /tennis-api

@@ -19,7 +19,7 @@ services:
     networks:
       - sports-backend
 
-  tennis-service:
+  tennis-api:
     build: ./
     ports:
       - "49160:8080"
