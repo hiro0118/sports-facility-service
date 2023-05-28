@@ -1,8 +1,8 @@
-package com.hiro0118.tennisservice.repositories.notification;
+package com.hiro0118.tennisservice.repositories.notificationconfig;
 
-import com.hiro0118.tennisservice.services.notification.NotificationConfigInput;
-import com.hiro0118.tennisservice.services.notification.repositoryinterface.INotificationRepository;
-import com.hiro0118.tennisservice.services.notification.entities.NotificationConfigEntity;
+import com.hiro0118.tennisservice.domain.notificationconfig.NotificationConfigInput;
+import com.hiro0118.tennisservice.domain.notificationconfig.repositoryinterface.INotificationConfigRepository;
+import com.hiro0118.tennisservice.domain.notificationconfig.entities.NotificationConfigEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Repository
-public class NotificationRepository implements INotificationRepository {
+public class NotificationConfigConfigRepository implements INotificationConfigRepository {
 
     private final Map<String, NotificationConfigEntity> entityDataMap = new HashMap<>();
     private int nextId = 0;

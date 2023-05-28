@@ -1,11 +1,11 @@
-package com.hiro0118.tennisservice.services.notification.repositoryinterface;
+package com.hiro0118.tennisservice.domain.notificationconfig.repositoryinterface;
 
-import com.hiro0118.tennisservice.services.notification.NotificationConfigInput;
-import com.hiro0118.tennisservice.services.notification.entities.NotificationConfigEntity;
+import com.hiro0118.tennisservice.domain.notificationconfig.NotificationConfigInput;
+import com.hiro0118.tennisservice.domain.notificationconfig.entities.NotificationConfigEntity;
 
 import java.util.List;
 
-public interface INotificationRepository {
+public interface INotificationConfigRepository {
 
     NotificationConfigEntity createConfiguration(NotificationConfigInput input);
 

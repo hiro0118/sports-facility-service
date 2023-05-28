@@ -1,7 +1,7 @@
-package com.hiro0118.tennisservice.services.raffle;
+package com.hiro0118.tennisservice.domain.raffle;
 
-import com.hiro0118.tennisservice.services.raffle.entities.RaffleStatusEntity;
-import com.hiro0118.tennisservice.services.raffle.repositoryinterface.IRaffleRepository;
+import com.hiro0118.tennisservice.domain.raffle.entities.RaffleStatusEntity;
+import com.hiro0118.tennisservice.domain.raffle.repositoryinterface.IRaffleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,4 +24,6 @@ public class RaffleService {
     ) {
         return this.repository.getRaffleStatus(dateList, timeList, parkIdList);
     }
+
+
 }

@@ -14,7 +14,7 @@ services:
         source: tennis-volume
         target: /var/lib/mysql
       - type: bind
-        source: ./src/main/resources/db
+        source: ./initdb.d
         target: /docker-entrypoint-initdb.d
     networks:
       - sports-backend

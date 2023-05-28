@@ -1,4 +1,4 @@
-package com.hiro0118.tennisservice.services.notification.entities;
+package com.hiro0118.tennisservice.domain.notificationconfig.entities;
 
 import lombok.Value;
 

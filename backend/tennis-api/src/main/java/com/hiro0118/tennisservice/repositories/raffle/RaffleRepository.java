@@ -1,7 +1,7 @@
 package com.hiro0118.tennisservice.repositories.raffle;
 
-import com.hiro0118.tennisservice.services.raffle.entities.RaffleStatusEntity;
-import com.hiro0118.tennisservice.services.raffle.repositoryinterface.IRaffleRepository;
+import com.hiro0118.tennisservice.domain.raffle.entities.RaffleStatusEntity;
+import com.hiro0118.tennisservice.domain.raffle.repositoryinterface.IRaffleRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 public class RaffleRepository implements IRaffleRepository {
 
     private final List<RaffleStatusEntity> dataList = List.of(
-        new RaffleStatusEntity("2023-05-14", "1100-1300", "parkA"),
-        new RaffleStatusEntity("2023-05-14", "1300-1500", "parkA"),
-        new RaffleStatusEntity("2023-05-14", "1100-1300", "parkA"),
-        new RaffleStatusEntity("2023-05-14", "1300-1500", "parkB"),
-        new RaffleStatusEntity("2023-05-15", "1100-1300", "parkC"),
-        new RaffleStatusEntity("2023-05-15", "1300-1500", "parkC")
+        new RaffleStatusEntity("2023-05-14", "1100-1300", "parkA", "park A", 5, 1),
+        new RaffleStatusEntity("2023-05-14", "1300-1500", "parkA", "park A", 5, 1),
+        new RaffleStatusEntity("2023-05-14", "1100-1300", "parkA", "park A", 5, 1),
+        new RaffleStatusEntity("2023-05-14", "1300-1500", "parkB", "park B", 5, 1),
+        new RaffleStatusEntity("2023-05-15", "1100-1300", "parkB", "park B", 5, 1),
+        new RaffleStatusEntity("2023-05-15", "1300-1500", "parkC", "park C", 5, 1)
     );
 
     @Override
@@ -26,13 +26,21 @@ public class RaffleRepository implements IRaffleRepository {
         List<String> parkIdList
     ) {
        return  dataList.stream()
-            .filter(d -> containedInFilter(dateList, d.getDate()))
-            .filter(d -> containedInFilter(timeList, d.getDate()))
-            .filter(d -> containedInFilter(parkIdList, d.getDate()))
+            .filter(data -> containedInFilter(dateList, data.getDate()))
+            .filter(data -> containedInFilter(timeList, data.getTime()))
+            .filter(data -> containedInFilter(parkIdList, data.getParkId()))
             .collect(Collectors.toList());
     }
 
     private boolean containedInFilter(List<String> filterList, String val) {
-        return filterList == null || filterList.contains(val);
+        if (filterList == null || filterList.isEmpty()) {
+            return true;
+        }
+        for (String filter : filterList) {
+            if (filter.equals(val)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

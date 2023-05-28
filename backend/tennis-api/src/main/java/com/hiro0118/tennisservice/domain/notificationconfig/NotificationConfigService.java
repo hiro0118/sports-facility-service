@@ -1,17 +1,17 @@
-package com.hiro0118.tennisservice.services.notification;
+package com.hiro0118.tennisservice.domain.notificationconfig;
 
-import com.hiro0118.tennisservice.services.notification.entities.NotificationConfigEntity;
-import com.hiro0118.tennisservice.services.notification.repositoryinterface.INotificationRepository;
+import com.hiro0118.tennisservice.domain.notificationconfig.entities.NotificationConfigEntity;
+import com.hiro0118.tennisservice.domain.notificationconfig.repositoryinterface.INotificationConfigRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class NotificationService {
+public class NotificationConfigService {
 
-    private final INotificationRepository repository;
+    private final INotificationConfigRepository repository;
 
-    public NotificationService(INotificationRepository repository) {
+    public NotificationConfigService(INotificationConfigRepository repository) {
         this.repository = repository;
     }
 

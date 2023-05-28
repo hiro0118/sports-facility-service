@@ -6,6 +6,6 @@ WORKDIR /home/gradle/tennisapi
 RUN gradle build
 
 FROM openjdk:17
-COPY --from=build /home/gradle/tennisapi/build/libs/tennis-service-1.0.jar /usr/app/tennis-api-1.0.jar
+COPY --from=build /home/gradle/tennisapi/build/libs/tennis-api-1.0.jar /usr/app/tennis-api-1.0.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/app/tennis-api-1.0.jar"]
