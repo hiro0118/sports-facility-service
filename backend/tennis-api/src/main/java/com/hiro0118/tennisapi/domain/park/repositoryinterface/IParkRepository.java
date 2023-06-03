@@ -1,6 +1,6 @@
-package com.hiro0118.tennisservice.domain.park.repositoryinterface;
+package com.hiro0118.tennisapi.domain.park.repositoryinterface;
 
-import com.hiro0118.tennisservice.domain.park.entities.ParkEntity;
+import com.hiro0118.tennisapi.domain.park.entities.ParkEntity;
 
 import java.util.List;
 

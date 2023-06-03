@@ -1,8 +1,6 @@
-package com.hiro0118.tennisservice.domain.raffle.entities;
+package com.hiro0118.tennisapi.domain.raffle.entities;
 
 import lombok.Value;
-
-import java.math.BigDecimal;
 
 @Value
 public class RaffleStatusEntity {

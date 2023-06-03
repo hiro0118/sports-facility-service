@@ -1,7 +1,7 @@
-package com.hiro0118.tennisservice.controllers.raffle;
+package com.hiro0118.tennisapi.controllers.raffle;
 
-import com.hiro0118.tennisservice.domain.raffle.RaffleService;
-import com.hiro0118.tennisservice.domain.raffle.entities.RaffleStatusEntity;
+import com.hiro0118.tennisapi.domain.raffle.RaffleService;
+import com.hiro0118.tennisapi.domain.raffle.entities.RaffleStatusEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
