@@ -4,8 +4,8 @@ import lombok.Value;
 
 @Value
 public class ParkEntity {
-    private final String parkId;
-    private final String parkName;
+    private final String id;
+    private final String name;
     private final String postalCode;
     private final String address;
     private final int numOfCourts;

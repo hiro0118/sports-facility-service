@@ -7,7 +7,10 @@ export const SELECT_ALL = "selectAll";
 interface Props {
   id: string,
   onSelect: any,
-  items: string[],
+  items: {
+    id: string,
+    value: string,
+  }[],
   selections: Set<string>,
 }
 
@@ -43,12 +46,12 @@ export const FilterAccordion: FC<Props> = (props: Props) => {
             {props.items.map(condition => {
               return (
                 <FormControlLabel
-                  key={condition}
-                  id={condition}
-                  value={condition}
+                  key={condition.id}
+                  id={condition.id}
+                  value={condition.value}
                   control={<Checkbox />}
-                  checked={props.selections.has(condition)}
-                  label={condition}
+                  checked={props.selections.has(condition.id)}
+                  label={condition.value}
                   onChange={props.onSelect} />
               );
             })}

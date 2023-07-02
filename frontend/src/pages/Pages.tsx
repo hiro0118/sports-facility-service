@@ -6,8 +6,8 @@ import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 
 export const pages: PageInfo[] = [
   {
-    title: "Tennis Courts",
-    path: "tennis-courts",
+    title: "Raffle Status",
+    path: "raffle-status",
     icon: SportsTennisIcon,
     element: TennisCourtsPage,
   },

@@ -9,3 +9,10 @@ services:
       - name: tennis_api_route
         paths:
           - /tennis-api
+  - name: frontend
+    url: http://host.docker.internal:3000
+    protocol: http
+    routes:
+      - name: frontend_route
+        paths:
+          - /

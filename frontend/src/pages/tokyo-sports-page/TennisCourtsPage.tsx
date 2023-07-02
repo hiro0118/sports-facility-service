@@ -4,6 +4,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { FilterAccordion, SELECT_ALL } from './FilterAccordion';
 import React, { useCallback, useEffect, useState } from 'react';
 import { MAX_DISPLAY_NUM, SortableTable } from './SortableTable';
+import { Park, useGetParks } from '../../resources/ParkResource';
+import { Time, useGetTimes } from '../../resources/TimeResource';
+import { RaffleStatus, useGetRaffleStatus } from '../../resources/RaffleStatusResource';
+import { Date, toDateString, useGetDates } from '../../resources/DateResource';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -57,53 +61,45 @@ const sortTimes = (a: string, b: string) => {
 
 export const TennisCourtsPage = () => {
 
-  const [allItems, setAllItems] = useState<CourtData[]>([]);
-  const [allDates, setAllDates] = useState<string[]>([]);
-  const [allTimes, setAllTimes] = useState<string[]>([]);
-  const [allParks, setAllParks] = useState<string[]>([]);
-  const [visibleItems, setVisibleItems] = useState<CourtData[]>([]);
+  const [allDates, setAllDates] = useState<Date[]>([]);
+  const [allTimes, setAllTimes] = useState<Time[]>([]);
+  const [allParks, setAllParks] = useState<Park[]>([]);
 
-  const [selectedDates, setSelectedDates] = useState<Set<string>>(new Set());
-  const [selectedTimes, setSelectedTimes] = useState<Set<string>>(new Set());
-  const [selectedParks, setSelectedParks] = useState<Set<string>>(new Set());
+  const [selectedDateIdSet, setSelectedDateIdSet] = useState<Set<string>>(new Set());
+  const [selectedTimeIdSet, setSelectedTimeIdSet] = useState<Set<string>>(new Set());
+  const [selectedParkIdSet, setSelectedParkIdSet] = useState<Set<string>>(new Set());
+
+  const [raffleStatus, setRaffleStatus] = useState<RaffleStatus[]>([]);
   const [favedItems, setFavedItems] = useState<Set<string>>(new Set());
 
   const [tabId, setTabId] = useState(0);
 
+  // API hooks
+  const sendGetDatesRequest = useGetDates();
+  const sendGetTimesRequest = useGetTimes();
+  const sendGetParksRequest = useGetParks();
+  const sendGetRaffleStatusRequest = useGetRaffleStatus();
+
   // Initialization
   useEffect(() => {
-    // Fetch court data from public folder.
-    fetch("application_data.json")
-      .then((res) => res.json())
-      .then((res) => {
-        const dataList = res as CourtData[];
-        setAllItems(dataList);
-        setVisibleItems(dataList);
-        const dates = dataList.map(i => i.date).filter(removeDuplicate).sort();
-        const times = dataList.map(i => i.time).filter(removeDuplicate).sort(sortTimes);
-        const parks = dataList.map(i => i.park).filter(removeDuplicate).sort();
-        setAllDates(dates);
-        setAllTimes(times);
-        setAllParks(parks);
-        setSelectedDates(new Set(dates));
-        setSelectedTimes(new Set(times));
-        setSelectedParks(new Set(parks));
-      });
+    sendGetDatesRequest({}, (dates: Date[]) => setAllDates(dates));
+    sendGetTimesRequest({}, (times: Time[]) => setAllTimes(times));
+    sendGetParksRequest({}, (parks: Park[]) => setAllParks(parks));
   }, []);
 
   const onDateChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedList = getUpdatedSelections(allDates, selectedDates, event);
-    setSelectedDates(updatedList);
+    const updatedList = getUpdatedSelections(allDates.map(d => toDateString(d)), selectedDateIdSet, event);
+    setSelectedDateIdSet(updatedList);
   }
 
   const onTimeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedList = getUpdatedSelections(allTimes, selectedTimes, event);
-    setSelectedTimes(updatedList);
+    const updatedList = getUpdatedSelections(allTimes.map(t => t.id), selectedTimeIdSet, event);
+    setSelectedTimeIdSet(updatedList);
   }
 
   const onParkChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedList = getUpdatedSelections(allParks, selectedParks, event);
-    setSelectedParks(updatedList);
+    const updatedList = getUpdatedSelections(allParks.map(p => p.id), selectedParkIdSet, event);
+    setSelectedParkIdSet(updatedList);
   }
 
   const onFaved = useCallback((key: string) => {
@@ -117,11 +113,15 @@ export const TennisCourtsPage = () => {
   }, [favedItems]);
 
   const onApply = () => {
-    const newVisbleItems = allItems
-      .filter(i => selectedDates.has(i.date))
-      .filter(i => selectedTimes.has(i.time))
-      .filter(i => selectedParks.has(i.park));
-    setVisibleItems(newVisbleItems);
+    sendGetRaffleStatusRequest(
+      {
+        queries: {
+          date: Array.from(selectedDateIdSet),
+          time: Array.from(selectedTimeIdSet),
+          parkId: Array.from(selectedParkIdSet),
+        }
+      },
+      (raffleStatus) => setRaffleStatus(raffleStatus));
   }
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -145,20 +145,27 @@ export const TennisCourtsPage = () => {
               <FilterAccordion
                 id='Dates'
                 onSelect={onDateChecked}
-                items={allDates}
-                selections={selectedDates}
+                items={allDates.map(d => {
+                  const dateStr = toDateString(d);
+                  return { id: dateStr, value: dateStr, }
+                })}
+                selections={selectedDateIdSet}
               />
               <FilterAccordion
                 id='Times'
                 onSelect={onTimeChecked}
-                items={allTimes}
-                selections={selectedTimes}
+                items={allTimes.map(t => {
+                  return { id: t.id, value: t.time, }
+                })}
+                selections={selectedTimeIdSet}
               />
               <FilterAccordion
                 id='Parks'
                 onSelect={onParkChecked}
-                items={allParks}
-                selections={selectedParks}
+                items={allParks.map(p => {
+                  return { id: p.id, value: p.name, }
+                })}
+                selections={selectedParkIdSet}
               />
               <Button
                 variant="contained"
@@ -172,7 +179,7 @@ export const TennisCourtsPage = () => {
 
             <Grid xs={12} md={9.2}>
               <SortableTable
-                dataList={visibleItems}
+                dataList={raffleStatus}
                 favedItemSet={favedItems}
                 favedItemOnly={false}
                 onFaved={onFaved} />
@@ -183,7 +190,7 @@ export const TennisCourtsPage = () => {
         <TabPanel value={tabId} index={1}>
           <Grid xs={12} md={9.2}>
             <SortableTable
-              dataList={allItems}
+              dataList={raffleStatus}
               favedItemSet={favedItems}
               favedItemOnly={true}
               onFaved={onFaved} />
@@ -205,6 +212,26 @@ const getUpdatedSelections = (
 
   if (value === SELECT_ALL) {
     return (allItems.length === selections.size) ?
+      new Set<string>() : new Set<string>(allItems);
+  } else {
+    const newSelections = new Set<string>(selections);
+    checked ? newSelections.add(value) : newSelections.delete(value);
+    return newSelections;
+  }
+}
+
+const getUpdatedSelections2 = (
+  allItems: string[],
+  selections: Set<string>,
+  event: React.ChangeEvent<HTMLInputElement>
+): Set<string> => {
+
+  const value = event.target.defaultValue;
+  const checked = event.target.checked;
+
+  if (value === SELECT_ALL) {
+    const allSelectedAlready = (allItems.length === selections.size);
+    return allSelectedAlready ?
       new Set<string>() : new Set<string>(allItems);
   } else {
     const newSelections = new Set<string>(selections);

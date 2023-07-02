@@ -11,8 +11,6 @@ public class RaffleService {
 
     private IRaffleRepository repository;
 
-    private static final List<String> EMPTY_STR_LIST = List.of();
-
     public RaffleService(IRaffleRepository repository) {
         this.repository = repository;
     }

@@ -2,17 +2,18 @@ import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHe
 import { FC, memo, useState } from "react";
 import StarIcon from '@mui/icons-material/Star';
 import { CourtData } from "./TennisCourtsPage";
+import { RaffleStatus } from "../../resources/RaffleStatusResource";
 
 export const MAX_DISPLAY_NUM = 100;
 
 interface Props {
-  dataList: CourtData[],
+  dataList: RaffleStatus[],
   favedItemSet: Set<string>,
   favedItemOnly: boolean,
   onFaved: any,
 }
 
-const getSortedData = (dataList: CourtData[], asc: boolean): CourtData[] => {
+const getSortedData = (dataList: RaffleStatus[], asc: boolean): RaffleStatus[] => {
   const newDataList = [...dataList];
   return newDataList.sort(
     (a, b) => asc ? (b.ratio - a.ratio) : (a.ratio - b.ratio)
@@ -32,7 +33,7 @@ export const SortableTable: FC<Props> = memo((props: Props) => {
         (asc ? (b.ratio - a.ratio) : (a.ratio - b.ratio)) ||
         a.date.localeCompare(b.date) ||
         ((a.time.length - b.time.length) || a.time.localeCompare(b.time)) ||
-        a.park.localeCompare(b.park)
+        a.parkId.localeCompare(b.parkId)
     );
   }
 
@@ -76,9 +77,9 @@ export const SortableTable: FC<Props> = memo((props: Props) => {
                   </TableCell>
                   <TableCell component="th" scope="row">{data.date}</TableCell>
                   <TableCell>{data.time}</TableCell>
-                  <TableCell>{data.park}</TableCell>
-                  <TableCell align="right">{data.courts}</TableCell>
-                  <TableCell align="right">{data.applications}</TableCell>
+                  <TableCell>{data.parkId}</TableCell>
+                  <TableCell align="right">{data.numOfCourts}</TableCell>
+                  <TableCell align="right">{data.numOfApplications}</TableCell>
                   <TableCell align="right">{String(data.ratio).slice(0, 5)}</TableCell>
                 </TableRow>
               )
@@ -89,6 +90,6 @@ export const SortableTable: FC<Props> = memo((props: Props) => {
   );
 });
 
-const keyOf = (data: CourtData): string => {
-  return `${data.date}-${data.time}-${data.park}`
+const keyOf = (data: RaffleStatus): string => {
+  return `${data.date}-${data.time}-${data.parkId}`
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class RaffleController {
 
-    public final RaffleService service;
+    private final RaffleService service;
 
     public RaffleController(RaffleService service) {
         this.service = service;
