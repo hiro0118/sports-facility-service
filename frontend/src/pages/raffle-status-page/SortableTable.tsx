@@ -1,7 +1,7 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material";
 import { FC, memo, useState } from "react";
 import StarIcon from '@mui/icons-material/Star';
-import { CourtData } from "./TennisCourtsPage";
+import { CourtData } from "./RaffleStatusPage";
 import { RaffleStatus } from "../../resources/RaffleStatusResource";
 
 export const MAX_DISPLAY_NUM = 100;

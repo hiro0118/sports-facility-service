@@ -102,7 +102,7 @@ export const MenuBar: FC<Props> = (props: Props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Sports Facility Service
+            Sports Facility Info Service
           </Typography>
 
           <Stack direction="row" spacing={1} alignItems="center">

@@ -130,7 +130,7 @@ export const TennisCourtsPage = () => {
 
   return (
     <>
-      <Typography variant="h3" padding={3} align="center">Tennis Court Application Status</Typography>
+      <Typography variant="h3" padding={3} align="center">Raffle Status</Typography>
       <Container sx={{ mb: 2 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={tabId} onChange={handleTabChange} aria-label="basic tabs example">

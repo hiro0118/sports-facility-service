@@ -1,8 +1,8 @@
-import { TennisCourtsPage } from "./tokyo-sports-page/TennisCourtsPage";
-import { WorkInProgressPage } from "./wip-page/WorkInProgressPage";
+import { TennisCourtsPage } from "./raffle-status-page/RaffleStatusPage";
+import { WorkInProgressPage } from "./notification-config-page/NotificationConfigPage";
 import { PageInfo } from "../components/menu-bar/PageInfo";
 import SportsTennisIcon from '@mui/icons-material/SportsTennis';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 
 export const pages: PageInfo[] = [
   {
@@ -12,9 +12,9 @@ export const pages: PageInfo[] = [
     element: TennisCourtsPage,
   },
   {
-    title: "WIP",
-    path: "wip",
-    icon: ContactSupportIcon,
+    title: "Notification Config",
+    path: "notification-config",
+    icon: CircleNotificationsIcon,
     element: WorkInProgressPage,
   }
 ]
