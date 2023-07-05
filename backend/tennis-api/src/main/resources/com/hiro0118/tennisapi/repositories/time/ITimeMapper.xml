@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiro0118.tennisapi.repositories.time.ITimeMapper">
+    <resultMap id="timeMap"
+               type="com.hiro0118.tennisapi.domain.time.entities.TimeEntity">
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="TIME" jdbcType="VARCHAR" property="time" />
+    </resultMap>
+    <select id="getTimes" resultMap="timeMap">
+        SELECT ID, TIME FROM TIMEdocker
+    </select>
+</mapper>
