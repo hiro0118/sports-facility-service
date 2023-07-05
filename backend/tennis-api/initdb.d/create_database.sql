@@ -20,18 +20,6 @@ INSERT INTO time (time) VALUES ('1500-1700');
 INSERT INTO time (time) VALUES ('1700-1900');
 INSERT INTO time (time) VALUES ('1900-2100');
 
-CREATE TABLE IF NOT EXISTS day (
-    day VARCHAR(3) NOT NULL,
-    PRIMARY KEY (day)
-);
-INSERT INTO day (day) VALUES ('mon');
-INSERT INTO day (day) VALUES ('tue');
-INSERT INTO day (day) VALUES ('wed');
-INSERT INTO day (day) VALUES ('thu');
-INSERT INTO day (day) VALUES ('fri');
-INSERT INTO day (day) VALUES ('sat');
-INSERT INTO day (day) VALUES ('sun');
-
 CREATE TABLE IF NOT EXISTS park (
     id VARCHAR(8) NOT NULL,
     name VARCHAR(50) NOT NULL,
