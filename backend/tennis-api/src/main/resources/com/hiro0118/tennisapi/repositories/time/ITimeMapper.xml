@@ -3,10 +3,9 @@
 <mapper namespace="com.hiro0118.tennisapi.repositories.time.ITimeMapper">
     <resultMap id="timeMap"
                type="com.hiro0118.tennisapi.domain.time.entities.TimeEntity">
-        <result column="ID" jdbcType="VARCHAR" property="id" />
-        <result column="TIME" jdbcType="VARCHAR" property="time" />
+        <result column="time" jdbcType="VARCHAR" property="time" />
     </resultMap>
     <select id="getTimes" resultMap="timeMap">
-        SELECT ID, TIME FROM TIMEdocker
+        SELECT time FROM time
     </select>
 </mapper>
