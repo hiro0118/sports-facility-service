@@ -22,6 +22,4 @@ public class RaffleService {
     ) {
         return this.repository.getRaffleStatus(dateList, timeList, parkIdList);
     }
-
-
 }
