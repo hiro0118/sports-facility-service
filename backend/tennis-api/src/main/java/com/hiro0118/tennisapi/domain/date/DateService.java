@@ -15,11 +15,11 @@ public class DateService {
     private final static int RAFFLE_DEADLINE = 10;
 
     public List<DateEntity> getDates(boolean weekendOnly) {
-
-        //TODO: Get this from DB.
         LocalDateTime time = LocalDateTime.now();
-        int year = time.getYear();
-        int month = time.getMonthValue() + 1;
+        return getDates(time.getYear(), time.getMonthValue(), weekendOnly);
+    }
+
+    public List<DateEntity> getDates(int year, int month, boolean weekendOnly) {
 
         // Get the first day of the specified month
         LocalDate date = LocalDate.of(year, month, 1);

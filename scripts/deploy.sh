@@ -7,10 +7,12 @@ apis=("tennis-api")
 script_dir="$(cd "$(dirname "$0")" && pwd)"
 
 # Start API gateway
+echo "Starting API gateway..."
 cd $script_dir/../api-gateway
 docker-compose up -d
 
 # Start backend APIs
+echo "Starting backend APIs..."
 for api in "${apis[@]}"; do
   echo "Starting $api..."
   cd $script_dir/../backend/$api
@@ -18,6 +20,6 @@ for api in "${apis[@]}"; do
 done
 
 # Start frontend
-script_dir="$(cd "$(dirname "$0")" && pwd)"
+echo "Starting frontend..."
 cd $script_dir/../frontend
 npm start

@@ -18,6 +18,4 @@ public class TimeService {
     public List<TimeEntity> getTimes() {
         return this.repository.getTimes();
     }
-
-
 }

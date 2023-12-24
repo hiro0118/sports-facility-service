@@ -4,6 +4,5 @@ import lombok.Value;
 
 @Value
 public class TimeEntity {
-    private final String id;
     private final String time;
 }
