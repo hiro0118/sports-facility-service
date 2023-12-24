@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MybatisTest
-@ActiveProfiles("integration")
+@ActiveProfiles("test")
 @Transactional
 class TimeRepositoryTest {
 
