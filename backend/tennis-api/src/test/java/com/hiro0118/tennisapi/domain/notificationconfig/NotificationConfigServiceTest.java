@@ -2,27 +2,28 @@ package com.hiro0118.tennisapi.domain.notificationconfig;
 
 import com.hiro0118.tennisapi.domain.notificationconfig.entities.NotificationConfigEntity;
 import com.hiro0118.tennisapi.domain.notificationconfig.repositoryinterface.INotificationConfigRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {NotificationConfigService.class, INotificationConfigRepository.class})
 class NotificationConfigServiceTest {
 
-    @Autowired
     NotificationConfigService service;
 
-    @MockBean
+    @Mock
     INotificationConfigRepository repository;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+        service = new NotificationConfigService(repository);
+    }
 
     @Test
     public void test() {

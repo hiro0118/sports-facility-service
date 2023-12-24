@@ -13,13 +13,45 @@ repositories {
 	mavenCentral()
 }
 
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+sourceSets {
+	integration {
+		java {
+			compileClasspath += main.output + test.output
+			runtimeClasspath += main.output + test.output
+			srcDir file('src/integration/java')
+		}
+		resources {
+			srcDirs file('src/integration/resources')
+		}
+	}
+}
+
+configurations {
+	integrationImplementation.extendsFrom testImplementation
+	integrationRuntime.extendsFrom testRuntime
+}
+
+tasks.register('integration', Test) {
+	useJUnitPlatform()
+	testClassesDirs = sourceSets.integration.output.classesDirs
+	classpath = sourceSets.integration.runtimeClasspath
+	outputs.upToDateWhen { false }
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'mysql:mysql-connector-java:8.0.18'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	integrationImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+allprojects {
+	tasks.withType(Copy).configureEach {
+		duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	}
 }

@@ -1,20 +1,19 @@
 package com.hiro0118.tennisapi.domain.date;
 
 import com.hiro0118.tennisapi.domain.date.enities.DateEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = DateService.class)
 class DateServiceTest {
 
-    @Autowired
     DateService service;
+
+    @BeforeEach
+    void setup() {
+        service = new DateService();
+    }
 
     @Test
     public void getDates_weekendOnlyTrue_returnWeekends() {
