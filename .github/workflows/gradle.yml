@@ -29,7 +29,9 @@ jobs:
         gradle-version: 8.1.1
 
     - name: Make gradlew executable
-      run: chmod +x backend/tennis-api/gradlew
+      working-directory: ./backend/tennis-api
+      run: chmod +x gradlew
 
     - name: Execute Gradle build for tennis-api
-      run: ./backend/tennis-api/gradlew build
+      working-directory: ./backend/tennis-api/
+      run: ./gradlew build
