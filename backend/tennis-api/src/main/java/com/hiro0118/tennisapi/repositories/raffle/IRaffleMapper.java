@@ -7,12 +7,14 @@ import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.hiro0118.tennisapi.repositories.RepositoryUtils.in;
+import static com.hiro0118.tennisapi.repositories.RepositoryUtils.listIsEmpty;
 
 @Mapper
 public interface IRaffleMapper {
 
-    @SelectProvider(IRaffleMapper.RaffleProvider.class)
+    @SelectProvider(RaffleProvider.class)
     List<RaffleStatusEntity> getRaffleStatus(
         List<String> dateList,
         List<String> timeList,
@@ -26,8 +28,14 @@ public interface IRaffleMapper {
             final List<String> parkIdList
         ) {
             return new SQL() {{
-                SELECT("date", "time", "park_id", "num_of_applications");
-                FROM("raffle_status");
+                SELECT("rs.date");
+                SELECT("rs.time");
+                SELECT("rs.park_id");
+                SELECT("p.name AS park_name");
+                SELECT("p.num_of_courts");
+                SELECT("rs.num_of_applications");
+                FROM("raffle_status rs");
+                INNER_JOIN("park p ON rs.park_id = p.id");
                 if (!listIsEmpty(dateList)) {
                     WHERE(in("date", dateList));
                 }
@@ -39,18 +47,6 @@ public interface IRaffleMapper {
                 }
                 ORDER_BY("date", "time", "park_id");
             }}.toString();
-        }
-
-        private static boolean listIsEmpty(List<String> list) {
-            return list == null || list.isEmpty();
-        }
-
-        private static String in(final String name, final List<String> conditions) {
-            var ors = conditions
-                .stream()
-                .map(cond -> name + "='" + cond + "'")
-                .collect(Collectors.joining(" OR "));
-            return "(" + ors + ")";
         }
     }
 }
