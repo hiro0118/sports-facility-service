@@ -1,6 +1,6 @@
 package com.hiro0118.tennisapi.repositories.time;
 
-import com.hiro0118.tennisapi.domain.time.repositoryinterface.ITimeRepository;
+import com.hiro0118.tennisapi.domain.time.ITimeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;

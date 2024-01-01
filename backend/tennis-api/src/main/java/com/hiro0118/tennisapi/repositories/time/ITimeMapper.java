@@ -1,6 +1,6 @@
 package com.hiro0118.tennisapi.repositories.time;
 
-import com.hiro0118.tennisapi.domain.time.entities.TimeEntity;
+import com.hiro0118.tennisapi.domain.time.TimeEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;

@@ -1,7 +1,5 @@
 package com.hiro0118.tennisapi.domain.time;
 
-import com.hiro0118.tennisapi.domain.time.entities.TimeEntity;
-import com.hiro0118.tennisapi.domain.time.repositoryinterface.ITimeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

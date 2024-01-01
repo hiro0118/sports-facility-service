@@ -1,4 +1,4 @@
-package com.hiro0118.tennisapi.domain.time.entities;
+package com.hiro0118.tennisapi.domain.time;
 
 import lombok.Value;
 

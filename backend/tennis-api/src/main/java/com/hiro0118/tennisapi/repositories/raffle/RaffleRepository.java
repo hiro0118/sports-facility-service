@@ -1,11 +1,10 @@
 package com.hiro0118.tennisapi.repositories.raffle;
 
-import com.hiro0118.tennisapi.domain.raffle.entities.RaffleStatusEntity;
-import com.hiro0118.tennisapi.domain.raffle.repositoryinterface.IRaffleRepository;
+import com.hiro0118.tennisapi.domain.raffle.RaffleStatusEntity;
+import com.hiro0118.tennisapi.domain.raffle.IRaffleRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class RaffleRepository implements IRaffleRepository {

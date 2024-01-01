@@ -1,6 +1,6 @@
 package com.hiro0118.tennisapi.repositories.park;
 
-import com.hiro0118.tennisapi.domain.park.entities.ParkEntity;
+import com.hiro0118.tennisapi.domain.park.ParkEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;

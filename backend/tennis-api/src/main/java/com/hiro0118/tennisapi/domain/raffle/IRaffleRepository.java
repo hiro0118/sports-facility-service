@@ -1,6 +1,6 @@
-package com.hiro0118.tennisapi.domain.raffle.repositoryinterface;
+package com.hiro0118.tennisapi.domain.raffle;
 
-import com.hiro0118.tennisapi.domain.raffle.entities.RaffleStatusEntity;
+import com.hiro0118.tennisapi.domain.raffle.RaffleStatusEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

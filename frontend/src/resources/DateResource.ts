@@ -17,6 +17,10 @@ export type GetDatesQueryParams = {
     month: string;
 }
 
-export const toDateString = (dateObj: Date) => {
+export const toDateId = (dateObj: Date) => {
+    return `${dateObj.year}${dateObj.month}${dateObj.date}`;
+}
+
+export const toDateValue = (dateObj: Date) => {
     return `${dateObj.year}/${dateObj.month}/${dateObj.date}`;
 }

@@ -1,7 +1,7 @@
 package com.hiro0118.tennisapi.repositories.park;
 
-import com.hiro0118.tennisapi.domain.park.entities.ParkEntity;
-import com.hiro0118.tennisapi.domain.park.repositoryinterface.IParkRepository;
+import com.hiro0118.tennisapi.domain.park.ParkEntity;
+import com.hiro0118.tennisapi.domain.park.IParkRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

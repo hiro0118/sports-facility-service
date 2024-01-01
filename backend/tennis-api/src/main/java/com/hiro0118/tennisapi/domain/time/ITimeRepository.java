@@ -1,6 +1,6 @@
-package com.hiro0118.tennisapi.domain.time.repositoryinterface;
+package com.hiro0118.tennisapi.domain.time;
 
-import com.hiro0118.tennisapi.domain.time.entities.TimeEntity;
+import com.hiro0118.tennisapi.domain.time.TimeEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

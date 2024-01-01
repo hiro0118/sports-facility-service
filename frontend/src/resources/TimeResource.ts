@@ -7,6 +7,5 @@ export const useGetTimes = () => {
 }
 
 export type Time = {
-    id: string;
     time: string;
 }

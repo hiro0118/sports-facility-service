@@ -1,7 +1,7 @@
 package com.hiro0118.tennisapi.repositories.park;
 
-import com.hiro0118.tennisapi.domain.park.entities.ParkEntity;
-import com.hiro0118.tennisapi.domain.park.repositoryinterface.IParkRepository;
+import com.hiro0118.tennisapi.domain.park.ParkEntity;
+import com.hiro0118.tennisapi.domain.park.IParkRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -10,9 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 

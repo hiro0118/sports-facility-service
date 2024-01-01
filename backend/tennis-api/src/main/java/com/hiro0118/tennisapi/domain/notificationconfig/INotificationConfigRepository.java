@@ -1,7 +1,7 @@
-package com.hiro0118.tennisapi.domain.notificationconfig.repositoryinterface;
+package com.hiro0118.tennisapi.domain.notificationconfig;
 
 import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
-import com.hiro0118.tennisapi.domain.notificationconfig.entities.NotificationConfigEntity;
+import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
 
 import java.util.List;
 

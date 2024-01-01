@@ -1,7 +1,7 @@
 package com.hiro0118.tennisapi.controllers.park;
 
 import com.hiro0118.tennisapi.domain.park.ParkService;
-import com.hiro0118.tennisapi.domain.park.entities.ParkEntity;
+import com.hiro0118.tennisapi.domain.park.ParkEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

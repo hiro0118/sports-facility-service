@@ -1,8 +1,8 @@
 package com.hiro0118.tennisapi.repositories.notificationconfig;
 
 import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
-import com.hiro0118.tennisapi.domain.notificationconfig.repositoryinterface.INotificationConfigRepository;
-import com.hiro0118.tennisapi.domain.notificationconfig.entities.NotificationConfigEntity;
+import com.hiro0118.tennisapi.domain.notificationconfig.INotificationConfigRepository;
+import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

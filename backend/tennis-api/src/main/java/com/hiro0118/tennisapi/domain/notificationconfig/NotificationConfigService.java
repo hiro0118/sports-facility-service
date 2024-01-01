@@ -1,7 +1,5 @@
 package com.hiro0118.tennisapi.domain.notificationconfig;
 
-import com.hiro0118.tennisapi.domain.notificationconfig.entities.NotificationConfigEntity;
-import com.hiro0118.tennisapi.domain.notificationconfig.repositoryinterface.INotificationConfigRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

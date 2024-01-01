@@ -7,7 +7,7 @@ import { MAX_DISPLAY_NUM, SortableTable } from './SortableTable';
 import { Park, useGetParks } from '../../resources/ParkResource';
 import { Time, useGetTimes } from '../../resources/TimeResource';
 import { RaffleStatus, useGetRaffleStatus } from '../../resources/RaffleStatusResource';
-import { Date, toDateString, useGetDates } from '../../resources/DateResource';
+import { Date, toDateId, toDateValue, useGetDates } from '../../resources/DateResource';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -88,12 +88,12 @@ export const TennisCourtsPage = () => {
   }, []);
 
   const onDateChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedList = getUpdatedSelections(allDates.map(d => toDateString(d)), selectedDateIdSet, event);
+    const updatedList = getUpdatedSelections(allDates.map(d => toDateId(d)), selectedDateIdSet, event);
     setSelectedDateIdSet(updatedList);
   }
 
   const onTimeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedList = getUpdatedSelections(allTimes.map(t => t.id), selectedTimeIdSet, event);
+    const updatedList = getUpdatedSelections(allTimes.map(t => t.time), selectedTimeIdSet, event);
     setSelectedTimeIdSet(updatedList);
   }
 
@@ -146,8 +146,9 @@ export const TennisCourtsPage = () => {
                 id='Dates'
                 onSelect={onDateChecked}
                 items={allDates.map(d => {
-                  const dateStr = toDateString(d);
-                  return { id: dateStr, value: dateStr, }
+                  const dateId = toDateId(d);
+                  const dateValue = toDateValue(d);
+                  return { id: dateId, value: dateValue }
                 })}
                 selections={selectedDateIdSet}
               />
@@ -155,7 +156,7 @@ export const TennisCourtsPage = () => {
                 id='Times'
                 onSelect={onTimeChecked}
                 items={allTimes.map(t => {
-                  return { id: t.id, value: t.time, }
+                  return { id: t.time, value: t.time, }
                 })}
                 selections={selectedTimeIdSet}
               />

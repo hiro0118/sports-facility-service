@@ -1,6 +1,5 @@
 package com.hiro0118.tennisapi.domain.date;
 
-import com.hiro0118.tennisapi.domain.date.enities.DateEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package com.hiro0118.tennisapi.controllers.date;
 
 import com.hiro0118.tennisapi.domain.date.DateService;
-import com.hiro0118.tennisapi.domain.date.enities.DateEntity;
+import com.hiro0118.tennisapi.domain.date.DateEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

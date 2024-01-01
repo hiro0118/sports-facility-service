@@ -2,7 +2,7 @@ package com.hiro0118.tennisapi.controllers.notificationconfig;
 
 import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
 import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigService;
-import com.hiro0118.tennisapi.domain.notificationconfig.entities.NotificationConfigEntity;
+import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

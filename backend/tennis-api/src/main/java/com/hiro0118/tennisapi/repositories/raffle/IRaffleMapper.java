@@ -1,7 +1,6 @@
 package com.hiro0118.tennisapi.repositories.raffle;
 
-import com.hiro0118.tennisapi.domain.raffle.entities.RaffleStatusEntity;
-import com.hiro0118.tennisapi.repositories.time.ITimeMapper;
+import com.hiro0118.tennisapi.domain.raffle.RaffleStatusEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;

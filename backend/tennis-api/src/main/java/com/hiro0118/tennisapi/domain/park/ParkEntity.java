@@ -1,4 +1,4 @@
-package com.hiro0118.tennisapi.domain.park.entities;
+package com.hiro0118.tennisapi.domain.park;
 
 import lombok.Value;
 

@@ -1,7 +1,7 @@
 package com.hiro0118.tennisapi.repositories.raffle;
 
-import com.hiro0118.tennisapi.domain.raffle.entities.RaffleStatusEntity;
-import com.hiro0118.tennisapi.domain.raffle.repositoryinterface.IRaffleRepository;
+import com.hiro0118.tennisapi.domain.raffle.RaffleStatusEntity;
+import com.hiro0118.tennisapi.domain.raffle.IRaffleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;

@@ -1,4 +1,4 @@
-package com.hiro0118.tennisapi.domain.raffle.entities;
+package com.hiro0118.tennisapi.domain.raffle;
 
 import lombok.Value;
 

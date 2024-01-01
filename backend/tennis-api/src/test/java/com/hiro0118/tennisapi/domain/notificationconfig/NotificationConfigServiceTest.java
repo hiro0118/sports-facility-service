@@ -1,7 +1,5 @@
 package com.hiro0118.tennisapi.domain.notificationconfig;
 
-import com.hiro0118.tennisapi.domain.notificationconfig.entities.NotificationConfigEntity;
-import com.hiro0118.tennisapi.domain.notificationconfig.repositoryinterface.INotificationConfigRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
