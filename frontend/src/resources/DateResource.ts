@@ -18,7 +18,9 @@ export type GetDatesQueryParams = {
 }
 
 export const toDateId = (dateObj: Date) => {
-    return `${dateObj.year}${dateObj.month}${dateObj.date}`;
+    const paddedMonth = dateObj.month.toString().padStart(2, '0');
+    const paddedDate = dateObj.date.toString().padStart(2, '0');
+    return `${dateObj.year}${paddedMonth}${paddedDate}`;
 }
 
 export const toDateValue = (dateObj: Date) => {

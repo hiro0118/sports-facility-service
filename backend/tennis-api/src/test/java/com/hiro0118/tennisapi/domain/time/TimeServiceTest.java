@@ -25,7 +25,7 @@ class TimeServiceTest {
 
     @Test
     void test() {
-        List<TimeEntity> expected = List.of(new TimeEntity("1000"));
+        List<TimeEntity> expected = List.of(new TimeEntity("0900-1100"));
         when(repository.getTimes()).thenReturn(expected);
 
         var result = service.getTimes();

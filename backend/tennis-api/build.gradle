@@ -15,11 +15,12 @@ repositories {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	exclude '**/repositories/**'
 }
 
-tasks.register('unitTest', Test) {
+tasks.register('repositoryTest', Test) {
 	useJUnitPlatform()
-	exclude '**/repositories/**'
+	include '**/repositories/**'
 }
 
 dependencies {

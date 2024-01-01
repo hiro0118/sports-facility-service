@@ -6,4 +6,4 @@ script_dir="$(cd "$(dirname "$0")" && pwd)"
 # Start DB
 echo "Starting Tennis DB"
 cd ${script_dir}/../backend/tennis-api/scripts/
-docker-compose up tennis-test-db
+docker-compose up -d tennis-test-db
