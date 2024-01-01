@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS tennis_db;
 USE tennis_db;
 
 CREATE TABLE IF NOT EXISTS user (
-    id VARCHAR(36) NOT NULL,
+    id VARCHAR(8) NOT NULL,
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS time (
 CREATE TABLE IF NOT EXISTS park (
     id VARCHAR(8) NOT NULL,
     name VARCHAR(50) NOT NULL,
+    postal_code INT(7) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    num_of_courts INT(2) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -23,8 +26,7 @@ CREATE TABLE IF NOT EXISTS notification_day (
     user_id VARCHAR(8) NOT NULL,
     day VARCHAR(3) NOT NULL,
     PRIMARY KEY (user_id, day),
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (day) REFERENCES day(day)
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS notification_time (
@@ -40,5 +42,15 @@ CREATE TABLE IF NOT EXISTS notification_park (
     park_id VARCHAR(50) NOT NULL,
     PRIMARY KEY (user_id, park_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (park_id) REFERENCES park(id)
+);
+
+CREATE TABLE IF NOT EXISTS raffle_status (
+    date VARCHAR(8) NOT NULL,
+    time VARCHAR(50) NOT NULL,
+    park_id VARCHAR(50) NOT NULL,
+    num_of_applications INT(2) NOT NULL,
+    PRIMARY KEY (date, time, park_id),
+    FOREIGN KEY (time) REFERENCES time(time),
     FOREIGN KEY (park_id) REFERENCES park(id)
 );

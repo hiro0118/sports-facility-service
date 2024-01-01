@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+
+  tennis-test-db:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tennis_db
+    ports:
+      - "49200:3306"
+    volumes:
+      - type: bind
+        source: ./../initdb.d
+        target: /docker-entrypoint-initdb.d

@@ -6,7 +6,7 @@ import lombok.Value;
 public class ParkEntity {
     private final String id;
     private final String name;
-    private final String postalCode;
+    private final int postalCode;
     private final String address;
     private final int numOfCourts;
 }

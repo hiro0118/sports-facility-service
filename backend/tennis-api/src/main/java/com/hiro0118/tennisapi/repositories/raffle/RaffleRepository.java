@@ -10,14 +10,11 @@ import java.util.stream.Collectors;
 @Repository
 public class RaffleRepository implements IRaffleRepository {
 
-    private final List<RaffleStatusEntity> dataList = List.of(
-        new RaffleStatusEntity("2023-05-14", "1100-1300", "parkA", "park A", 5, 1),
-        new RaffleStatusEntity("2023-05-14", "1300-1500", "parkA", "park A", 5, 1),
-        new RaffleStatusEntity("2023-05-14", "1100-1300", "parkA", "park A", 5, 1),
-        new RaffleStatusEntity("2023-05-14", "1300-1500", "parkB", "park B", 5, 1),
-        new RaffleStatusEntity("2023-05-15", "1100-1300", "parkB", "park B", 5, 1),
-        new RaffleStatusEntity("2023-05-15", "1300-1500", "parkC", "park C", 5, 1)
-    );
+    private final IRaffleMapper mapper;
+
+    public RaffleRepository(IRaffleMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public List<RaffleStatusEntity> getRaffleStatus(
@@ -25,22 +22,6 @@ public class RaffleRepository implements IRaffleRepository {
         List<String> timeList,
         List<String> parkIdList
     ) {
-       return  dataList.stream()
-            .filter(data -> containedInFilter(dateList, data.getDate()))
-            .filter(data -> containedInFilter(timeList, data.getTime()))
-            .filter(data -> containedInFilter(parkIdList, data.getParkId()))
-            .collect(Collectors.toList());
-    }
-
-    private boolean containedInFilter(List<String> filterList, String val) {
-        if (filterList == null || filterList.isEmpty()) {
-            return true;
-        }
-        for (String filter : filterList) {
-            if (filter.equals(val)) {
-                return true;
-            }
-        }
-        return false;
+        return mapper.getRaffleStatus(dateList, timeList, parkIdList);
     }
 }

@@ -15,6 +15,7 @@ public class TimeRepository implements ITimeRepository {
         this.mapper = mapper;
     }
 
+    @Override
     public List<TimeEntity> getTimes() {
         return mapper.getTimes();
     }
