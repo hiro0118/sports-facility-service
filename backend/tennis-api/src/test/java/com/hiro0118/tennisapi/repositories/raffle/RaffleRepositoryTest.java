@@ -46,9 +46,9 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(List.of("20231230"), null, null);
 
         assertEquals(3, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "A", 1);
-        assertRaffle(result.get(1), "20231230", "0700-0900", "B", 2);
-        assertRaffle(result.get(2), "20231230", "0900-1100", "B", 3);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "A", "Park A", 1, 1);
+        assertRaffle(result.get(1), "20231230", "0700-0900", "B", "Park B", 2, 2);
+        assertRaffle(result.get(2), "20231230", "0900-1100", "B", "Park B", 2, 3);
     }
 
     @Test
@@ -56,10 +56,10 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(List.of("20231230", "20231231"), null, null);
 
         assertEquals(4, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "A", 1);
-        assertRaffle(result.get(1), "20231230", "0700-0900", "B", 2);
-        assertRaffle(result.get(2), "20231230", "0900-1100", "B", 3);
-        assertRaffle(result.get(3), "20231231", "0900-1100", "B", 4);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "A", "Park A", 1, 1);
+        assertRaffle(result.get(1), "20231230", "0700-0900", "B", "Park B", 2, 2);
+        assertRaffle(result.get(2), "20231230", "0900-1100", "B", "Park B", 2, 3);
+        assertRaffle(result.get(3), "20231231", "0900-1100", "B", "Park B", 2, 4);
     }
 
     @Test
@@ -67,8 +67,8 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(null, List.of("0700-0900"), null);
 
         assertEquals(2, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "A", 1);
-        assertRaffle(result.get(1), "20231230", "0700-0900", "B", 2);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "A", "Park A", 1, 1);
+        assertRaffle(result.get(1), "20231230", "0700-0900", "B", "Park B", 2, 2);
     }
 
     @Test
@@ -76,10 +76,10 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(null, List.of("0700-0900", "0900-1100"), null);
 
         assertEquals(4, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "A", 1);
-        assertRaffle(result.get(1), "20231230", "0700-0900", "B", 2);
-        assertRaffle(result.get(2), "20231230", "0900-1100", "B", 3);
-        assertRaffle(result.get(3), "20231231", "0900-1100", "B", 4);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "A", "Park A", 1, 1);
+        assertRaffle(result.get(1), "20231230", "0700-0900", "B", "Park B", 2, 2);
+        assertRaffle(result.get(2), "20231230", "0900-1100", "B", "Park B", 2, 3);
+        assertRaffle(result.get(3), "20231231", "0900-1100", "B", "Park B", 2, 4);
     }
 
     @Test
@@ -87,7 +87,7 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(null, null, List.of("A"));
 
         assertEquals(1, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "A", 1);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "A", "Park A", 1, 1);
     }
 
     @Test
@@ -95,10 +95,10 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(null, null, List.of("A" , "B"));
 
         assertEquals(4, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "A", 1);
-        assertRaffle(result.get(1), "20231230", "0700-0900", "B", 2);
-        assertRaffle(result.get(2), "20231230", "0900-1100", "B", 3);
-        assertRaffle(result.get(3), "20231231", "0900-1100", "B", 4);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "A", "Park A", 1, 1);
+        assertRaffle(result.get(1), "20231230", "0700-0900", "B", "Park B", 2, 2);
+        assertRaffle(result.get(2), "20231230", "0900-1100", "B", "Park B", 2, 3);
+        assertRaffle(result.get(3), "20231231", "0900-1100", "B", "Park B", 2, 4);
     }
 
     @Test
@@ -106,7 +106,7 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(List.of("20231230"), List.of("0900-1100"), null);
 
         assertEquals(1, result.size());
-        assertRaffle(result.get(0), "20231230", "0900-1100", "B", 3);
+        assertRaffle(result.get(0), "20231230", "0900-1100", "B", "Park B", 2, 3);
     }
 
     @Test
@@ -114,8 +114,8 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(List.of("20231230"), null, List.of("B"));
 
         assertEquals(2, result.size());
-        assertRaffle(result.get(0), "20231230", "0700-0900", "B", 2);
-        assertRaffle(result.get(1), "20231230", "0900-1100", "B", 3);
+        assertRaffle(result.get(0), "20231230", "0700-0900", "B", "Park B", 2, 2);
+        assertRaffle(result.get(1), "20231230", "0900-1100", "B", "Park B", 2, 3);
     }
 
     @Test
@@ -123,14 +123,24 @@ class RaffleRepositoryTest {
         var result = repository.getRaffleStatus(null, List.of("0900-1100"), List.of("B"));
 
         assertEquals(2, result.size());
-        assertRaffle(result.get(0), "20231230", "0900-1100", "B", 3);
-        assertRaffle(result.get(1), "20231231", "0900-1100", "B", 4);
+        assertRaffle(result.get(0), "20231230", "0900-1100", "B", "Park B", 2, 3);
+        assertRaffle(result.get(1), "20231231", "0900-1100", "B", "Park B", 2, 4);
     }
 
-    private void assertRaffle(RaffleStatusEntity result, String date, String time, String parkId, int numOfApplications) {
+    private void assertRaffle(
+        RaffleStatusEntity result,
+        String date,
+        String time,
+        String parkId,
+        String parkName,
+        int numOfCourts,
+        int numOfApplications
+    ) {
         assertEquals(date, result.getDate());
         assertEquals(time, result.getTime());
         assertEquals(parkId, result.getParkId());
+        assertEquals(parkName, result.getParkName());
+        assertEquals(numOfCourts, result.getNumOfCourts());
         assertEquals(numOfApplications, result.getNumOfApplications());
     }
 }

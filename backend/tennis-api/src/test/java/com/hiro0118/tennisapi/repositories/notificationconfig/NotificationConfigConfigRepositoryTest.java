@@ -19,8 +19,8 @@ class NotificationConfigConfigRepositoryTest {
 
     INotificationConfigRepository repository;
 
-    @Autowired
-    INotificationConfigMapper mapper;
+//    @Autowired
+//    INotificationConfigMapper mapper;
 
     @BeforeEach
     void setup() {
