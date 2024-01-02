@@ -1,7 +1,6 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material";
 import { FC, memo, useState } from "react";
 import StarIcon from '@mui/icons-material/Star';
-import { CourtData } from "./RaffleStatusPage";
 import { RaffleStatus } from "../../resources/RaffleStatusResource";
 
 export const MAX_DISPLAY_NUM = 100;
@@ -22,7 +21,7 @@ const getSortedData = (dataList: RaffleStatus[], asc: boolean): RaffleStatus[] =
 
 export const SortableTable: FC<Props> = memo((props: Props) => {
 
-  console.log("SortableTable updated!")
+  console.log("SortableTable updated.")
 
   const [asc, setAsc] = useState<boolean>(false);
 
@@ -77,7 +76,7 @@ export const SortableTable: FC<Props> = memo((props: Props) => {
                   </TableCell>
                   <TableCell component="th" scope="row">{data.date}</TableCell>
                   <TableCell>{data.time}</TableCell>
-                  <TableCell>{data.parkId}</TableCell>
+                  <TableCell>{data.parkName}</TableCell>
                   <TableCell align="right">{data.numOfCourts}</TableCell>
                   <TableCell align="right">{data.numOfApplications}</TableCell>
                   <TableCell align="right">{String(data.ratio).slice(0, 5)}</TableCell>

@@ -16,7 +16,7 @@ echo "Starting backend APIs..."
 for api in "${apis[@]}"; do
   echo "Starting $api..."
   cd $script_dir/../backend/$api
-  docker-compose up -d
+  docker-compose up -d --build
 done
 
 # Start frontend

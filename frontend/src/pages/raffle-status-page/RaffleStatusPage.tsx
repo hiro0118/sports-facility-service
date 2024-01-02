@@ -25,7 +25,7 @@ export interface CourtData {
 }
 
 const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
+  const { children, index, value, ...other } = props;
 
   return (
     <div
