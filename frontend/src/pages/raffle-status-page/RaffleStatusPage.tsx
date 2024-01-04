@@ -7,7 +7,7 @@ import { MAX_DISPLAY_NUM, SortableTable } from './SortableTable';
 import { Park, useGetParks } from '../../resources/ParkResource';
 import { Time, useGetTimes } from '../../resources/TimeResource';
 import { RaffleStatus, useGetRaffleStatus } from '../../resources/RaffleStatusResource';
-import { Date, toDateId, toDateValue, useGetDates } from '../../resources/DateResource';
+import { CustomDate, toDateId, toDateValue, useGetDates } from '../../resources/CustomDateResource';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -61,7 +61,7 @@ const sortTimes = (a: string, b: string) => {
 
 export const TennisCourtsPage = () => {
 
-  const [allDates, setAllDates] = useState<Date[]>([]);
+  const [allDates, setAllDates] = useState<CustomDate[]>([]);
   const [allTimes, setAllTimes] = useState<Time[]>([]);
   const [allParks, setAllParks] = useState<Park[]>([]);
 
@@ -82,7 +82,7 @@ export const TennisCourtsPage = () => {
 
   // Initialization
   useEffect(() => {
-    sendGetDatesRequest({}, (dates: Date[]) => setAllDates(dates));
+    sendGetDatesRequest({}, (dates: CustomDate[]) => setAllDates(dates));
     sendGetTimesRequest({}, (times: Time[]) => setAllTimes(times));
     sendGetParksRequest({}, (parks: Park[]) => setAllParks(parks));
   }, []);
