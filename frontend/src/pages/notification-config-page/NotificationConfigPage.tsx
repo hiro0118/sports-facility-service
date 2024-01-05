@@ -143,9 +143,9 @@ export const NotificationConfigPage = () => {
               />
             </LocalizationProvider>
             <Button
-              // variant="contained"
               size="large"
               onClick={onRemoveOld}
+              disabled={!enabled}
             >
               Remove Old
             </Button>
