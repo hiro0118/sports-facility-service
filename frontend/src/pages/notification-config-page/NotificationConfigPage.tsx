@@ -51,7 +51,7 @@ export const NotificationConfigPage = () => {
     setSelectedDays(config?.dayList ?? []);
     setSelectedTimes(config?.timeList ?? []);
     setSelectedParks(config?.parkList ?? []);
-    setDateExclusions(config?.exclusionDateList ?? []);
+    setDateExclusions(config?.dateExclusionList ?? []);
   }
 
   // Event Handlers
@@ -132,7 +132,7 @@ export const NotificationConfigPage = () => {
       dayList: selectedDays,
       timeList: selectedTimes,
       parkList: selectedParks,
-      exclusionDateList: dateExclusions,
+      dateExclusionList: dateExclusions,
     }
     sendPutNotificationConfigById(userId, newConfig);
   }

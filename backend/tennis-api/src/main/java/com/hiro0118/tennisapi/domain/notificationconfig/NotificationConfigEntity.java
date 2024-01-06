@@ -14,5 +14,5 @@ public class NotificationConfigEntity {
     private final List<String> dayList;
     private final List<String> timeList;
     private final List<String> parkList;
-    private final List<DateEntity> exclusionDateList;
+    private final List<DateEntity> dateExclusionList;
 }

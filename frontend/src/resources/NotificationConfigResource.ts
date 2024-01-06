@@ -17,5 +17,5 @@ export type NotificationConfig = {
     dayList: string[],
     timeList: string[],
     parkList: string[],
-    exclusionDateList: CustomDate[],
+    dateExclusionList: CustomDate[],
 }

@@ -27,7 +27,7 @@ public class NotificationConfigService {
                 .dayList(days)
                 .timeList(times)
                 .parkList(parks)
-                .exclusionDateList(dateExclusions)
+                .dateExclusionList(dateExclusions)
                 .build();
         } else {
             return NotificationConfigEntity.builder()
@@ -36,7 +36,7 @@ public class NotificationConfigService {
                 .dayList(new ArrayList<>())
                 .timeList(new ArrayList<>())
                 .parkList(new ArrayList<>())
-                .exclusionDateList(new ArrayList<>())
+                .dateExclusionList(new ArrayList<>())
                 .build();
         }
     }
