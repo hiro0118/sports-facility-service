@@ -1,11 +1,8 @@
 package com.hiro0118.tennisapi.controllers.notificationconfig;
 
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
 import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigService;
 import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping
@@ -17,18 +14,13 @@ public class NotificationConfigController {
         this.service = service;
     }
 
-    @PostMapping(path="/notification-configs")
-    public NotificationConfigEntity createConfiguration(@RequestBody NotificationConfigInput inputData) {
-        return service.createConfiguration(inputData);
-    }
-
-    @GetMapping(path="/notification-configs")
-    public List<NotificationConfigEntity> getConfigurations() {
-        return service.getConfigurations();
-    }
-
     @GetMapping("/notification-configs/{id}")
     public NotificationConfigEntity getConfiguration(@PathVariable String id) {
-        return service.getConfiguration(id);
+        return service.getConfigurationById(id);
     }
-}
+
+    @PutMapping("/notification-configs/{id}")
+    public void putConfiguration(@PathVariable String id, @RequestBody NotificationConfigEntity input) {
+        service.registerConfigurationById(id, input);
+    }
+ }

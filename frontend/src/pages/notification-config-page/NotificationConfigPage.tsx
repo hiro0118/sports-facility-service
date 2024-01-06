@@ -6,29 +6,79 @@ import { useEffect, useState } from 'react';
 import { CustomDate, compareDates, dateEquals, toDateId, toDateValue, useGetDates } from '../../resources/CustomDateResource';
 import { Park, useGetParks } from '../../resources/ParkResource';
 import { ConfigSection } from './ConfigSection';
+import { Time, useGetTimes } from '../../resources/TimeResource';
+import { NotificationConfig, useGetNotificationConfigById, usePutNotificationConfigsById } from '../../resources/NotificationConfigResource';
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const NotificationConfigPage = () => {
-  const [allDates, setAllDates] = useState<CustomDate[]>([]);
+  // States
+  const [userId, setUserId] = useState<string>('');
+  const [allTimes, setAllTimes] = useState<Time[]>([]);
   const [allParks, setAllParks] = useState<Park[]>([]);
+
+  const [notificationConfig, setNotificationConfig] = useState<NotificationConfig>();
 
   const [enabled, setEnabled] = useState<boolean>(true);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedParks, setSelectedParks] = useState<string[]>([]);
   const [dateExclusions, setDateExclusions] = useState<CustomDate[]>([]);
 
   // API hooks
-  const sendGetDatesRequest = useGetDates();
+  const sendGetTimesRequest = useGetTimes();
   const sendGetParksRequest = useGetParks();
+  const sendGetNotificationConfigById = useGetNotificationConfigById();
+  const sendPutNotificationConfigById = usePutNotificationConfigsById();
 
   // Initialization
   useEffect(() => {
-    sendGetDatesRequest({}, (dates: CustomDate[]) => setAllDates(dates));
+    const user = "UserA";
+    setUserId(user);
+    sendGetTimesRequest({}, (times: Time[]) => setAllTimes(times));
     sendGetParksRequest({}, (parks: Park[]) => setAllParks(parks));
+    sendGetNotificationConfigById(
+      user,
+      (config: NotificationConfig) => {
+        setNotificationConfig(config);
+        if (config) setConfig(config);
+      }
+    );
   }, []);
 
+  const setConfig = (config: NotificationConfig | undefined) => {
+    setEnabled(config?.enabled ?? false);
+    setSelectedDays(config?.dayList ?? []);
+    setSelectedTimes(config?.timeList ?? []);
+    setSelectedParks(config?.parkList ?? []);
+    setDateExclusions(config?.exclusionDateList ?? []);
+  }
+
+  // Event Handlers
   const onEnabled = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     setEnabled(checked);
+  }
+
+  const onDayChecked = (checked: string) => {
+    const newSelections = getNewSelections(selectedDays, checked);
+    setSelectedDays(newSelections);
+  }
+
+  const onTimeChecked = (checked: string) => {
+    const newSelections = getNewSelections(selectedTimes, checked);
+    setSelectedTimes(newSelections);
+  }
+
+  const onParkChecked = (checked: string) => {
+    const newSelections = getNewSelections(selectedParks, checked);
+    setSelectedParks(newSelections);
+  }
+
+  const getNewSelections = (currentSelections: string[], checked: string): string[] => {
+    const wasSelected = currentSelections.includes(checked);
+    return wasSelected ?
+      currentSelections.filter(s => (s !== checked)) :
+      [...currentSelections, checked];
   }
 
   const onExclusionSelected = (dayjs: any) => {
@@ -39,7 +89,6 @@ export const NotificationConfigPage = () => {
     }
 
     const mergedDates = [...dateExclusions, added];
-
     const uniqueDates: CustomDate[] = [];
     mergedDates.forEach((date) => {
       if (!uniqueDates.some((uniqueDate) => dateEquals(date, uniqueDate))) {
@@ -73,11 +122,19 @@ export const NotificationConfigPage = () => {
   }
 
   const onReset = () => {
-    console.log("onReset");
+    setConfig(notificationConfig);
   }
 
   const onSave = () => {
-    console.log("onSave");
+    const newConfig: NotificationConfig = {
+      userId: userId,
+      enabled: enabled,
+      dayList: selectedDays,
+      timeList: selectedTimes,
+      parkList: selectedParks,
+      exclusionDateList: dateExclusions,
+    }
+    sendPutNotificationConfigById(userId, newConfig);
   }
 
   return (
@@ -101,11 +158,37 @@ export const NotificationConfigPage = () => {
             {DAYS.map(day => {
               return (
                 <FormControlLabel
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      checked={selectedDays.includes(day)}
+                      onChange={() => onDayChecked(day)}
+                    />
+                  }
                   key={day}
                   label={day}
                   disabled={!enabled}
-                  sx={{ m: 1 }}
+                  sx={{ m: 0.5 }}
+                />
+              )
+            })}
+          </Stack>
+        </ConfigSection>
+
+        <ConfigSection title="Times">
+          <Stack direction="row">
+            {allTimes.map(time => {
+              return (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTimes.includes(time.time)}
+                      onChange={() => onTimeChecked(time.time)}
+                    />
+                  }
+                  key={time.time}
+                  label={time.time}
+                  disabled={!enabled}
+                  sx={{ m: 0.5 }}
                 />
               )
             })}
@@ -118,10 +201,15 @@ export const NotificationConfigPage = () => {
               return (
                 <FormControlLabel
                   key={park.id}
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      checked={selectedParks.includes(park.id)}
+                      onChange={() => onParkChecked(park.id)}
+                    />
+                  }
                   label={park.name}
                   disabled={!enabled}
-                  sx={{ m: 1 }}
+                  sx={{ m: 0.5 }}
                 />
               );
             })}

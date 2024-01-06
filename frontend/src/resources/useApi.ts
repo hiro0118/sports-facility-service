@@ -1,24 +1,52 @@
 import axios from "axios";
 
-type Params<T>  ={
-    id?: string,
-    subResource?: string,
-    queries?: T,
-}
+type Handler<U> = (res: U) => void;
 
-type Handler<T> = (res: T) => void;
+export type Empty = {};
 
 export const useGetApi = <T, U>(
     baseUrl: string
-): ((parms: Params<T>, handler: Handler<U>) => void) => {
-    const sendRequest = (params: Params<T>, handler: Handler<U>) => {
-        const id = params.id ? `/${params.id}` : "";
-        const subResource = params.subResource ? `/${params.subResource}` : "";
-        const queryParams = params.queries ? `?${encodeQueryParams(params.queries)}` : "";
-        const url = baseUrl + id + subResource + queryParams;
+): ((queries: T, handler: Handler<U>) => void) => {
+    const sendRequest = (queries: T, handler: Handler<U>) => {
+        const queryParams = queries ? `?${encodeQueryParams(queries)}` : "";
+        const url = baseUrl + queryParams;
         axios.get(url).then((response) => {
-            console.log(response.data);
+            console.log("Received: " + JSON.stringify(response.data));
             handler(response.data);
+        });
+    }
+    return sendRequest;
+}
+
+export const useGetByIdApi = <U>(
+    baseUrl: string
+): ((id: string, handler: Handler<U>) => void) => {
+    const sendRequest = (id: string, handler: Handler<U>) => {
+        const url = `${baseUrl}/${id}`;
+        axios.get(url).then((response) => {
+            console.log("Received: " + JSON.stringify(response.data));
+            handler(response.data);
+        });
+    }
+    return sendRequest;
+}
+
+type PutParams<T> = {
+    id?: string,
+    subResource?: string,
+    body?: T,
+}
+
+export const userPutByIdApi = <T, U>(
+    baseUrl: string
+): ((id: string, body: T, handler?: Handler<U>) => void) => {
+    const sendRequest = (id: string, body: T, handler?: Handler<U>) => {
+        const url = `${baseUrl}/${id}`;
+        axios.put(url, body).then((response) => {
+            console.log("Received: " + JSON.stringify(response.data));
+            if (handler) {
+                handler(response.data);
+            }
         });
     }
     return sendRequest;

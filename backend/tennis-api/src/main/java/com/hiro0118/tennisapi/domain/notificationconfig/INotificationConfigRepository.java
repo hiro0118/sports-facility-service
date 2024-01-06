@@ -1,23 +1,19 @@
 package com.hiro0118.tennisapi.domain.notificationconfig;
 
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
+import com.hiro0118.tennisapi.domain.date.DateEntity;
+import com.hiro0118.tennisapi.domain.notificationconfig.data.*;
 
 import java.util.List;
 
 public interface INotificationConfigRepository {
 
-    NotificationConfigEntity createConfiguration(NotificationConfigInput input);
+    NotificationConfigBaseData getNotificationConfigBaseDataById(String id);
 
-    NotificationConfigEntity getConfiguration(String id);
+    List<String> getNotificationConfigDayListById(String id);
 
-    List<NotificationConfigEntity> getConfigurations();
+    List<String> getNotificationConfigTimeListById(String id);
 
-    void updateConfiguration(NotificationConfigInput input);
+    List<String> getNotificationConfigParkListById(String id);
 
-    void updateConfigurations(List<NotificationConfigInput> inputList);
-
-    void deleteConfiguration(String id);
-
-    void deleteConfigurations(List<String> ids);
+    List<DateEntity> getNotificationConfigDateExclusionListById(String id);
 }

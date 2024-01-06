@@ -115,11 +115,9 @@ export const TennisCourtsPage = () => {
   const onApply = () => {
     sendGetRaffleStatusRequest(
       {
-        queries: {
-          date: Array.from(selectedDateIdSet),
-          time: Array.from(selectedTimeIdSet),
-          parkId: Array.from(selectedParkIdSet),
-        }
+        date: Array.from(selectedDateIdSet),
+        time: Array.from(selectedTimeIdSet),
+        parkId: Array.from(selectedParkIdSet),
       },
       (raffleStatus) => setRaffleStatus(raffleStatus));
   }

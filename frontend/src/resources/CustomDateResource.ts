@@ -1,9 +1,9 @@
-import { useGetApi } from "./useApi";
+import { Empty, useGetApi } from "./useApi";
 
 const URL: string = "http://localhost:8000/tennis-api/dates";
 
 export const useGetDates = () => {
-    return useGetApi<GetDatesQueryParams, CustomDate[]>(URL);
+    return useGetApi<GetDatesQueryParams | Empty, CustomDate[]>(URL);
 }
 
 export type CustomDate = {
