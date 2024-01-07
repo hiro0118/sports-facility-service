@@ -14,6 +14,8 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const NotificationConfigPage = () => {
   // States
   const [userId, setUserId] = useState<string>('');
+  const [changed, setChanged] = useState<boolean>(false);
+
   const [allTimes, setAllTimes] = useState<Time[]>([]);
   const [allParks, setAllParks] = useState<Park[]>([]);
 
@@ -57,21 +59,25 @@ export const NotificationConfigPage = () => {
   // Event Handlers
   const onEnabled = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     setEnabled(checked);
+    setChanged(true);
   }
 
   const onDayChecked = (checked: string) => {
     const newSelections = getNewSelections(selectedDays, checked);
     setSelectedDays(newSelections);
+    setChanged(true);
   }
 
   const onTimeChecked = (checked: string) => {
     const newSelections = getNewSelections(selectedTimes, checked);
     setSelectedTimes(newSelections);
+    setChanged(true);
   }
 
   const onParkChecked = (checked: string) => {
     const newSelections = getNewSelections(selectedParks, checked);
     setSelectedParks(newSelections);
+    setChanged(true);
   }
 
   const getNewSelections = (currentSelections: string[], checked: string): string[] => {
@@ -98,19 +104,21 @@ export const NotificationConfigPage = () => {
 
     const sortedUniqueDates = uniqueDates.slice().sort(compareDates);
     setDateExclusions(sortedUniqueDates);
+    setChanged(true);
   }
 
   const onExclusionDeleted = (deleted: CustomDate) => {
     const newExclusions = [...dateExclusions]
       .filter(date => !dateEquals(date, deleted));
     setDateExclusions(newExclusions);
+    setChanged(true);
   }
 
   const onRemoveOld = () => {
     const date = new Date();
     const currentYear = date.getFullYear();
     const currentMonth = date.getMonth();
-    const newExclusions = [...dateExclusions]
+    const newExclusions = dateExclusions
       .filter(date => {
         if (Number(date.year) === currentYear) {
           return Number(date.month) > currentMonth;
@@ -118,11 +126,15 @@ export const NotificationConfigPage = () => {
           return Number(date.year) > currentYear;
         }
       });
-    setDateExclusions(newExclusions);
+    if (dateExclusions.length !== newExclusions.length) {
+      setDateExclusions(newExclusions);
+      setChanged(true);
+    }
   }
 
   const onReset = () => {
     setConfig(notificationConfig);
+    setChanged(false);
   }
 
   const onSave = () => {
@@ -275,6 +287,7 @@ export const NotificationConfigPage = () => {
             size="large"
             onClick={onSave}
             sx={{ mx: 1 }}
+            disabled={!changed}
           >
             Save
           </Button>

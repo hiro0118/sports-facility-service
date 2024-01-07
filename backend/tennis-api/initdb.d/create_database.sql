@@ -8,6 +8,13 @@ CREATE TABLE IF NOT EXISTS user (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS day (
+    id VARCHAR(50) NOT NULL,
+    name INT(10) NOT NULL,
+    short_name VARCHAR(3) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS time (
     time VARCHAR(9) NOT NULL,
     PRIMARY KEY (time)
