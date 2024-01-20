@@ -8,6 +8,7 @@ import { Park, useGetParks } from '../../resources/ParkResource';
 import { ConfigSection } from './ConfigSection';
 import { Time, useGetTimes } from '../../resources/TimeResource';
 import { NotificationConfig, useGetNotificationConfigById, usePutNotificationConfigsById } from '../../resources/NotificationConfigResource';
+import { Day, useGetDays } from '../../resources/DayResource';
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -15,7 +16,7 @@ export const NotificationConfigPage = () => {
   // States
   const [userId, setUserId] = useState<string>('');
   const [changed, setChanged] = useState<boolean>(false);
-
+  const [allDays, setAllDays] = useState<Day[]>([]);
   const [allTimes, setAllTimes] = useState<Time[]>([]);
   const [allParks, setAllParks] = useState<Park[]>([]);
 
@@ -28,6 +29,7 @@ export const NotificationConfigPage = () => {
   const [dateExclusions, setDateExclusions] = useState<CustomDate[]>([]);
 
   // API hooks
+  const sendGetDaysRequest = useGetDays();
   const sendGetTimesRequest = useGetTimes();
   const sendGetParksRequest = useGetParks();
   const sendGetNotificationConfigById = useGetNotificationConfigById();
@@ -37,6 +39,7 @@ export const NotificationConfigPage = () => {
   useEffect(() => {
     const user = "UserA";
     setUserId(user);
+    sendGetDaysRequest({}, (days: Day[]) => setAllDays(days));
     sendGetTimesRequest({}, (times: Time[]) => setAllTimes(times));
     sendGetParksRequest({}, (parks: Park[]) => setAllParks(parks));
     sendGetNotificationConfigById(
@@ -167,17 +170,17 @@ export const NotificationConfigPage = () => {
 
         <ConfigSection title="Days">
           <Stack direction="row">
-            {DAYS.map(day => {
+            {allDays.map(day => {
               return (
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={selectedDays.includes(day)}
-                      onChange={() => onDayChecked(day)}
+                      checked={selectedDays.includes(day.id)}
+                      onChange={() => onDayChecked(day.id)}
                     />
                   }
-                  key={day}
-                  label={day}
+                  key={day.id}
+                  label={day.shortName}
                   disabled={!enabled}
                   sx={{ m: 0.5 }}
                 />

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS user (
 );
 
 CREATE TABLE IF NOT EXISTS day (
-    id VARCHAR(50) NOT NULL,
+    id VARCHAR(2) NOT NULL,
     name INT(10) NOT NULL,
     short_name VARCHAR(3) NOT NULL,
     PRIMARY KEY (id)

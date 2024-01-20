@@ -5,7 +5,6 @@ import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
 public class NotificationConfigController {
 
     private final NotificationConfigService service;
