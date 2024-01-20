@@ -1,9 +1,9 @@
-import { useGetApi } from "./useApi";
+import { Empty, useGetApi } from "./useApi";
 
 const URL: string = "http://localhost:8000/tennis-api/parks";
 
 export const useGetParks = () => {
-    return useGetApi<void, Park[]>(URL);
+    return useGetApi<Empty, Park[]>(URL);
 }
 
 export type Park = {

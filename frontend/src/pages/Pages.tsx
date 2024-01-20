@@ -1,5 +1,5 @@
 import { TennisCourtsPage } from "./raffle-status-page/RaffleStatusPage";
-import { WorkInProgressPage } from "./notification-config-page/NotificationConfigPage";
+import { NotificationConfigPage } from "./notification-config-page/NotificationConfigPage";
 import { PageInfo } from "../components/menu-bar/PageInfo";
 import SportsTennisIcon from '@mui/icons-material/SportsTennis';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
@@ -15,6 +15,6 @@ export const pages: PageInfo[] = [
     title: "Notification Config",
     path: "notification-config",
     icon: NotificationsActiveIcon,
-    element: WorkInProgressPage,
+    element: NotificationConfigPage,
   }
 ]

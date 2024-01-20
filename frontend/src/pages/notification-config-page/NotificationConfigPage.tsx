@@ -1,8 +1,302 @@
-import { useEffect } from "react";
-import { useGetRaffleStatus } from "../../resources/RaffleStatusResource";
+import { Box, Button, Checkbox, Chip, Container, Divider, FormControlLabel, Grid, Stack, Switch, Typography } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useEffect, useState } from 'react';
+import { CustomDate, compareDates, dateEquals, toDateId, toDateValue, useGetDates } from '../../resources/CustomDateResource';
+import { Park, useGetParks } from '../../resources/ParkResource';
+import { ConfigSection } from './ConfigSection';
+import { Time, useGetTimes } from '../../resources/TimeResource';
+import { NotificationConfig, useGetNotificationConfigById, usePutNotificationConfigsById } from '../../resources/NotificationConfigResource';
+import { Day, useGetDays } from '../../resources/DayResource';
 
-const URL = "http://localhost:8000/tennis-api/raffle-status"
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-export const WorkInProgressPage = () => {
-  return <h1>Work in progress...</h1>;
+export const NotificationConfigPage = () => {
+  // States
+  const [userId, setUserId] = useState<string>('');
+  const [changed, setChanged] = useState<boolean>(false);
+  const [allDays, setAllDays] = useState<Day[]>([]);
+  const [allTimes, setAllTimes] = useState<Time[]>([]);
+  const [allParks, setAllParks] = useState<Park[]>([]);
+
+  const [notificationConfig, setNotificationConfig] = useState<NotificationConfig>();
+
+  const [enabled, setEnabled] = useState<boolean>(true);
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedParks, setSelectedParks] = useState<string[]>([]);
+  const [dateExclusions, setDateExclusions] = useState<CustomDate[]>([]);
+
+  // API hooks
+  const sendGetDaysRequest = useGetDays();
+  const sendGetTimesRequest = useGetTimes();
+  const sendGetParksRequest = useGetParks();
+  const sendGetNotificationConfigById = useGetNotificationConfigById();
+  const sendPutNotificationConfigById = usePutNotificationConfigsById();
+
+  // Initialization
+  useEffect(() => {
+    const user = "UserA";
+    setUserId(user);
+    sendGetDaysRequest({}, (days: Day[]) => setAllDays(days));
+    sendGetTimesRequest({}, (times: Time[]) => setAllTimes(times));
+    sendGetParksRequest({}, (parks: Park[]) => setAllParks(parks));
+    sendGetNotificationConfigById(
+      user,
+      (config: NotificationConfig) => {
+        setNotificationConfig(config);
+        if (config) setConfig(config);
+      }
+    );
+  }, []);
+
+  const setConfig = (config: NotificationConfig | undefined) => {
+    setEnabled(config?.enabled ?? false);
+    setSelectedDays(config?.dayList ?? []);
+    setSelectedTimes(config?.timeList ?? []);
+    setSelectedParks(config?.parkList ?? []);
+    setDateExclusions(config?.dateExclusionList ?? []);
+  }
+
+  // Event Handlers
+  const onEnabled = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setEnabled(checked);
+    setChanged(true);
+  }
+
+  const onDayChecked = (checked: string) => {
+    const newSelections = getNewSelections(selectedDays, checked);
+    setSelectedDays(newSelections);
+    setChanged(true);
+  }
+
+  const onTimeChecked = (checked: string) => {
+    const newSelections = getNewSelections(selectedTimes, checked);
+    setSelectedTimes(newSelections);
+    setChanged(true);
+  }
+
+  const onParkChecked = (checked: string) => {
+    const newSelections = getNewSelections(selectedParks, checked);
+    setSelectedParks(newSelections);
+    setChanged(true);
+  }
+
+  const getNewSelections = (currentSelections: string[], checked: string): string[] => {
+    const wasSelected = currentSelections.includes(checked);
+    return wasSelected ?
+      currentSelections.filter(s => (s !== checked)) :
+      [...currentSelections, checked];
+  }
+
+  const onExclusionSelected = (dayjs: any) => {
+    const added: CustomDate = {
+      year: dayjs.year().toString(),
+      month: (dayjs.month() + 1).toString(),
+      date: dayjs.date().toString(),
+    }
+
+    const mergedDates = [...dateExclusions, added];
+    const uniqueDates: CustomDate[] = [];
+    mergedDates.forEach((date) => {
+      if (!uniqueDates.some((uniqueDate) => dateEquals(date, uniqueDate))) {
+        uniqueDates.push(date);
+      }
+    });
+
+    const sortedUniqueDates = uniqueDates.slice().sort(compareDates);
+    setDateExclusions(sortedUniqueDates);
+    setChanged(true);
+  }
+
+  const onExclusionDeleted = (deleted: CustomDate) => {
+    const newExclusions = [...dateExclusions]
+      .filter(date => !dateEquals(date, deleted));
+    setDateExclusions(newExclusions);
+    setChanged(true);
+  }
+
+  const onRemoveOld = () => {
+    const date = new Date();
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth();
+    const newExclusions = dateExclusions
+      .filter(date => {
+        if (Number(date.year) === currentYear) {
+          return Number(date.month) > currentMonth;
+        } else {
+          return Number(date.year) > currentYear;
+        }
+      });
+    if (dateExclusions.length !== newExclusions.length) {
+      setDateExclusions(newExclusions);
+      setChanged(true);
+    }
+  }
+
+  const onReset = () => {
+    setConfig(notificationConfig);
+    setChanged(false);
+  }
+
+  const onSave = () => {
+    const newConfig: NotificationConfig = {
+      userId: userId,
+      enabled: enabled,
+      dayList: selectedDays,
+      timeList: selectedTimes,
+      parkList: selectedParks,
+      dateExclusionList: dateExclusions,
+    }
+    sendPutNotificationConfigById(userId, newConfig);
+  }
+
+  return (
+    <>
+      <Typography variant="h3" padding={3} align="center">Notification Configuration</Typography>
+      <Container sx={{ mb: 2 }}>
+
+        <ConfigSection title="Notifications">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={enabled}
+                onChange={onEnabled}
+                sx={{ m: 1 }}
+              />}
+            label={enabled ? "ON" : "OFF"} />
+        </ConfigSection>
+
+        <ConfigSection title="Days">
+          <Stack direction="row">
+            {allDays.map(day => {
+              return (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedDays.includes(day.id)}
+                      onChange={() => onDayChecked(day.id)}
+                    />
+                  }
+                  key={day.id}
+                  label={day.shortName}
+                  disabled={!enabled}
+                  sx={{ m: 0.5 }}
+                />
+              )
+            })}
+          </Stack>
+        </ConfigSection>
+
+        <ConfigSection title="Times">
+          <Stack direction="row">
+            {allTimes.map(time => {
+              return (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTimes.includes(time.time)}
+                      onChange={() => onTimeChecked(time.time)}
+                    />
+                  }
+                  key={time.time}
+                  label={time.time}
+                  disabled={!enabled}
+                  sx={{ m: 0.5 }}
+                />
+              )
+            })}
+          </Stack>
+        </ConfigSection>
+
+        <ConfigSection title="Parks">
+          <Stack direction="row">
+            {allParks.map(park => {
+              return (
+                <FormControlLabel
+                  key={park.id}
+                  control={
+                    <Checkbox
+                      checked={selectedParks.includes(park.id)}
+                      onChange={() => onParkChecked(park.id)}
+                    />
+                  }
+                  label={park.name}
+                  disabled={!enabled}
+                  sx={{ m: 0.5 }}
+                />
+              );
+            })}
+          </Stack>
+        </ConfigSection>
+
+        <ConfigSection title="Date Exclusions">
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+          >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                onAccept={(dayjs) => onExclusionSelected(dayjs)}
+                format="YYYY/MM/DD"
+                disabled={!enabled}
+                sx={{ m: 1 }}
+              />
+            </LocalizationProvider>
+            <Button
+              size="large"
+              onClick={onRemoveOld}
+              disabled={!enabled}
+            >
+              Remove Old
+            </Button>
+          </Grid>
+          <Stack direction="row" sx={{ m: 1 }}>
+            {dateExclusions.map(ex => {
+              const id = toDateId(ex);
+              const value = toDateValue(ex);
+              return (
+                <Chip
+                  key={id}
+                  id={id}
+                  label={value}
+                  onDelete={() => onExclusionDeleted(ex)}
+                  disabled={!enabled}
+                  sx={{ m: 0.5 }}
+                />
+              );
+            })
+            }
+          </Stack>
+        </ConfigSection>
+
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-end"
+        >
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={onReset}
+            sx={{ mx: 1 }}
+          >
+            Reset
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={onSave}
+            sx={{ mx: 1 }}
+            disabled={!changed}
+          >
+            Save
+          </Button>
+        </Grid>
+
+      </Container>
+    </>
+  );
 }

@@ -1,23 +1,44 @@
 package com.hiro0118.tennisapi.domain.notificationconfig;
 
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
+import com.hiro0118.tennisapi.domain.date.DateEntity;
+import com.hiro0118.tennisapi.domain.notificationconfig.data.*;
 
 import java.util.List;
 
 public interface INotificationConfigRepository {
 
-    NotificationConfigEntity createConfiguration(NotificationConfigInput input);
+    // Base Info
+    NotificationConfigBaseData getNotificationConfigBaseDataById(String id);
 
-    NotificationConfigEntity getConfiguration(String id);
+    void insertNotificationConfigBaseDateById(String id, NotificationConfigBaseData input);
 
-    List<NotificationConfigEntity> getConfigurations();
+    void deleteNotificationConfigBaseDateById(String id);
 
-    void updateConfiguration(NotificationConfigInput input);
+    // Days
+    List<String> getNotificationConfigDayListById(String id);
 
-    void updateConfigurations(List<NotificationConfigInput> inputList);
+    void insertNotificationConfigDayListById(String id, String day);
 
-    void deleteConfiguration(String id);
+    void deleteNotificationConfigDayListById(String id);
 
-    void deleteConfigurations(List<String> ids);
+    // Times
+    List<String> getNotificationConfigTimeListById(String id);
+
+    void insertNotificationConfigTimeListById(String id, String time);
+
+    void deleteNotificationConfigTimeListById(String id);
+
+    // Parks
+    List<String> getNotificationConfigParkListById(String id);
+
+    void insertNotificationConfigParkListById(String id, String park);
+
+    void deleteNotificationConfigParkListById(String id);
+
+    // Date Exclusions
+    List<DateEntity> getNotificationConfigDateExclusionListById(String id);
+
+    void insertNotificationConfigDateExclusionListById(String id, DateEntity date);
+
+    void deleteNotificationConfigDateExclusionListById(String id);
 }

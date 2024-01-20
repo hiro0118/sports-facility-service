@@ -1,83 +1,93 @@
 package com.hiro0118.tennisapi.repositories.notificationconfig;
 
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigInput;
+import com.hiro0118.tennisapi.domain.date.DateEntity;
 import com.hiro0118.tennisapi.domain.notificationconfig.INotificationConfigRepository;
-import com.hiro0118.tennisapi.domain.notificationconfig.NotificationConfigEntity;
+import com.hiro0118.tennisapi.domain.notificationconfig.data.NotificationConfigBaseData;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Repository
 public class NotificationConfigConfigRepository implements INotificationConfigRepository {
 
-    private final Map<String, NotificationConfigEntity> entityDataMap = new HashMap<>();
-    private int nextId = 0;
+    private final INotificationConfigMapper mapper;
 
-    private final ReentrantReadWriteLock repositoryLock = new ReentrantReadWriteLock();
-    private final Lock readLock = repositoryLock.readLock();
-    private final Lock writeLock = repositoryLock.writeLock();
-
-    private String generateNextId() {
-        String newId = String.valueOf(nextId++);
-        return newId;
+    public NotificationConfigConfigRepository(INotificationConfigMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override
-    public NotificationConfigEntity createConfiguration(NotificationConfigInput input) {
-        NotificationConfigEntity newEntity = null;
-        writeLock.lock();
-        try {
-            String newId = generateNextId();
-            newEntity = new NotificationConfigEntity(newId, input.getParkIdList());
-            entityDataMap.put(newId, newEntity);
-        } finally {
-            writeLock.unlock();
-        }
-        return newEntity;
-    }
-
-
-    @Override
-    public List<NotificationConfigEntity> getConfigurations() {
-        readLock.lock();
-        try {
-            return entityDataMap.values().stream().toList();
-        } finally {
-            readLock.unlock();
-        }
+    public NotificationConfigBaseData getNotificationConfigBaseDataById(String id) {
+        return mapper.getNotificationConfigBaseDataById(id);
     }
 
     @Override
-    public NotificationConfigEntity getConfiguration(String id) {
-        readLock.lock();
-        try {
-            return entityDataMap.get(id);
-        } finally {
-            readLock.unlock();
-        }
+    public void insertNotificationConfigBaseDateById(String id, NotificationConfigBaseData input) {
+        mapper.insertNotificationConfigBaseDataById(id, input.isEnabled());
     }
 
     @Override
-    public void updateConfiguration(NotificationConfigInput input) {
-
+    public void deleteNotificationConfigBaseDateById(String id) {
+        mapper.deleteNotificationConfigBaseDataById(id);
     }
 
     @Override
-    public void updateConfigurations(List<NotificationConfigInput> inputList) {
-
+    public List<String> getNotificationConfigDayListById(String id) {
+        return mapper.getNotificationConfigDayListById(id);
     }
 
     @Override
-    public void deleteConfiguration(String id) {
-
+    public void insertNotificationConfigDayListById(String id, String day) {
+        mapper.insertNotificationConfigDayListById(id, day);
     }
 
     @Override
-    public void deleteConfigurations(List<String> ids) {
+    public void deleteNotificationConfigDayListById(String id) {
+        mapper.deleteNotificationConfigDayListById(id);
+    }
 
+    @Override
+    public List<String> getNotificationConfigTimeListById(String id) {
+        return mapper.getNotificationConfigTimeListById(id);
+    }
+
+    @Override
+    public void insertNotificationConfigTimeListById(String id, String time) {
+        mapper.insertNotificationConfigTimeListById(id, time);
+    }
+
+    @Override
+    public void deleteNotificationConfigTimeListById(String id) {
+        mapper.deleteNotificationConfigTimeListById(id);
+    }
+
+    @Override
+    public List<String> getNotificationConfigParkListById(String id) {
+        return mapper.getNotificationConfigParkListById(id);
+    }
+
+    @Override
+    public void insertNotificationConfigParkListById(String id, String park) {
+        mapper.insertNotificationConfigParkListById(id, park);
+    }
+
+    @Override
+    public void deleteNotificationConfigParkListById(String id) {
+        mapper.deleteNotificationConfigParkListById(id);
+    }
+
+    @Override
+    public List<DateEntity> getNotificationConfigDateExclusionListById(String id) {
+        return mapper.getNotificationConfigDateExclusionListById(id);
+    }
+
+    @Override
+    public void insertNotificationConfigDateExclusionListById(String id, DateEntity date) {
+        mapper.insertNotificationConfigDateExclusionListById(id, date);
+    }
+
+    @Override
+    public void deleteNotificationConfigDateExclusionListById(String id) {
+        mapper.deleteNotificationConfigDateExclusionListById(id);
     }
 }

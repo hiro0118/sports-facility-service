@@ -8,6 +8,13 @@ CREATE TABLE IF NOT EXISTS user (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS day (
+    id VARCHAR(2) NOT NULL,
+    name INT(10) NOT NULL,
+    short_name VARCHAR(3) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS time (
     time VARCHAR(9) NOT NULL,
     PRIMARY KEY (time)
@@ -21,6 +28,13 @@ CREATE TABLE IF NOT EXISTS park (
     num_of_courts INT(2) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS notification_config (
+    user_id VARCHAR(8) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
 
 CREATE TABLE IF NOT EXISTS notification_day (
     user_id VARCHAR(8) NOT NULL,
@@ -43,6 +57,15 @@ CREATE TABLE IF NOT EXISTS notification_park (
     PRIMARY KEY (user_id, park_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (park_id) REFERENCES park(id)
+);
+
+CREATE TABLE IF NOT EXISTS notification_date_exclusion (
+    user_id VARCHAR(8) NOT NULL,
+    year VARCHAR(4) NOT NULL,
+    month VARCHAR(2) NOT NULL,
+    date VARCHAR(2) NOT NULL,
+    PRIMARY KEY (user_id, year, month, date),
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS raffle_status (
