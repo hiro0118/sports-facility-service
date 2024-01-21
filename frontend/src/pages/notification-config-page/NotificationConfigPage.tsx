@@ -149,7 +149,11 @@ export const NotificationConfigPage = () => {
       parkList: selectedParks,
       dateExclusionList: dateExclusions,
     }
-    sendPutNotificationConfigById(userId, newConfig);
+    sendPutNotificationConfigById(
+      userId,
+      newConfig,
+      () => { setChanged(false) }
+    );
   }
 
   return (
